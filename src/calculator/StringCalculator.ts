@@ -1,9 +1,13 @@
 export class StringCalculator {
   public add(input: string): number {
-    if (input.trim() === '') {
+    const trimmedInput = input.trim();
+
+    if (trimmedInput === '') {
       return 0;
     }
 
-    return Number(input.trim());
+    const numberTokens = trimmedInput.split(',');
+    const numbers = numberTokens.map((token) => Number(token.trim()));
+    return numbers.reduce((sum, num) => sum + num, 0);
   }
 }
