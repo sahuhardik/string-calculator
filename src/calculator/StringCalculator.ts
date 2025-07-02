@@ -19,7 +19,8 @@ export class StringCalculator {
 
     this.validateNoNegatives(numbers);
 
-    return this.calculateSum(numbers);
+    const validNumbers = this.filterValidNumbers(numbers);
+    return this.calculateSum(validNumbers);
   }
 
   private isEmpty(input: string): boolean {
@@ -35,5 +36,9 @@ export class StringCalculator {
       const negatives = numbers.filter((n) => n < 0);
       throw new Error(`negatives not allowed: ${negatives.join(', ')}`);
     }
+  }
+
+  private filterValidNumbers(numbers: number[]): number[] {
+    return numbers.filter((n) => n <= 1000);
   }
 }
