@@ -40,4 +40,11 @@ describe('StringCalculator', () => {
     expect(() => calculator.add('1,-2')).toThrow('negatives not allowed: -2');
     expect(() => calculator.add('2,-4,3,-1')).toThrow('negatives not allowed: -4, -1');
   });
+
+  it('should ignore numbers greater than 1000', () => {
+    expect(calculator.add('2,1001')).toBe(2);
+    expect(calculator.add('1000,1')).toBe(1001);
+    expect(calculator.add('500,1001,600')).toBe(1100); 
+  });
+
 });
