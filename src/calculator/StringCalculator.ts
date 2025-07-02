@@ -1,4 +1,13 @@
+import { IStringParser } from './parser/IStringParser';
+import { DefaultParser } from './parser/DefaultParser';
+
 export class StringCalculator {
+  private readonly parser: IStringParser;
+
+  constructor(parser: IStringParser = new DefaultParser()) {
+    this.parser = parser;
+  }
+
   public add(input: string): number {
     const normalizedInput = input.trim();
 
@@ -6,30 +15,12 @@ export class StringCalculator {
       return 0;
     }
 
-    const numbers = this.parseInput(normalizedInput);
+    const numbers = this.parser.parse(normalizedInput);
     return this.calculateSum(numbers);
   }
 
   private isEmpty(input: string): boolean {
     return input === '';
-  }
-
-  private parseInput(input: string): number[] {
-    let delimiterRegex = /[,\n]/;
-    let numbersSection = input;
-
-    const customDelimiterMatch = input.match(/^\/\/(.+)\n(.*)/);
-    if (customDelimiterMatch) {
-      const rawDelimiter = customDelimiterMatch[1];
-      numbersSection = customDelimiterMatch[2];
-
-      const escapedDelimiter = rawDelimiter.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-      delimiterRegex = new RegExp(`[${escapedDelimiter}\n]`);
-    }
-
-    return numbersSection
-      .split(delimiterRegex)
-      .map((token) => Number(token.trim()));
   }
 
   private calculateSum(numbers: number[]): number {
