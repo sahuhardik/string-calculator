@@ -15,8 +15,21 @@ export class StringCalculator {
   }
 
   private parseInput(input: string): number[] {
-    const tokens = input.split(/[\n,]/);
-    return tokens.map((token) => Number(token.trim()));
+    let delimiterRegex = /[,\n]/;
+    let numbersSection = input;
+
+    const customDelimiterMatch = input.match(/^\/\/(.+)\n(.*)/);
+    if (customDelimiterMatch) {
+      const rawDelimiter = customDelimiterMatch[1];
+      numbersSection = customDelimiterMatch[2];
+
+      const escapedDelimiter = rawDelimiter.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      delimiterRegex = new RegExp(`[${escapedDelimiter}\n]`);
+    }
+
+    return numbersSection
+      .split(delimiterRegex)
+      .map((token) => Number(token.trim()));
   }
 
   private calculateSum(numbers: number[]): number {
