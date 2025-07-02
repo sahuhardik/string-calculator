@@ -1,6 +1,9 @@
 export class StringCalculator {
   public add(input: string): number {
-    void input;
-    return 0;
+    if (input.trim() === '') {
+      return 0;
+    }
+
+    return Number(input.trim());
   }
 }
