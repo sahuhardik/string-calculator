@@ -6,7 +6,7 @@ export class StringCalculator {
       return 0;
     }
 
-    const numbers = this.parseCommaSeparatedValues(normalizedInput);
+    const numbers = this.parseInput(normalizedInput);
     return this.calculateSum(numbers);
   }
 
@@ -14,8 +14,9 @@ export class StringCalculator {
     return input === '';
   }
 
-  private parseCommaSeparatedValues(input: string): number[] {
-    return input.split(',').map((token) => Number(token.trim()));
+  private parseInput(input: string): number[] {
+    const tokens = input.split(/[\n,]/);
+    return tokens.map((token) => Number(token.trim()));
   }
 
   private calculateSum(numbers: number[]): number {
