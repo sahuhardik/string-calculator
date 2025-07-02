@@ -30,4 +30,10 @@ describe('StringCalculator', () => {
     expect(calculator.add('1\n2,3')).toBe(6);
     expect(calculator.add('4,5\n6')).toBe(15);
   });
+
+  it('should support custom single-character delimiter in format //;\n1;2', () => {
+    expect(calculator.add('//;\n1;2')).toBe(3);
+    expect(calculator.add('//#\n3#4')).toBe(7);
+  });
+
 });
