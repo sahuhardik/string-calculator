@@ -25,4 +25,9 @@ describe('StringCalculator', () => {
     expect(calculator.add('1,2,3')).toBe(6);
     expect(calculator.add('4,5,6,7')).toBe(22);
   });
+
+  it('should support newline characters as valid delimiters along with commas', () => {
+    expect(calculator.add('1\n2,3')).toBe(6);
+    expect(calculator.add('4,5\n6')).toBe(15);
+  });
 });
