@@ -16,6 +16,12 @@ export class StringCalculator {
     }
 
     const numbers = this.parser.parse(normalizedInput);
+    const negatives = numbers.filter((n) => n < 0);
+    
+    if (negatives.length > 0) {
+      throw new Error(`negatives not allowed: ${negatives.join(', ')}`);
+    }
+
     return this.calculateSum(numbers);
   }
 
