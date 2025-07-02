@@ -16,11 +16,8 @@ export class StringCalculator {
     }
 
     const numbers = this.parser.parse(normalizedInput);
-    const negatives = numbers.filter((n) => n < 0);
-    
-    if (negatives.length > 0) {
-      throw new Error(`negatives not allowed: ${negatives.join(', ')}`);
-    }
+
+    this.validateNoNegatives(numbers);
 
     return this.calculateSum(numbers);
   }
@@ -31,5 +28,12 @@ export class StringCalculator {
 
   private calculateSum(numbers: number[]): number {
     return numbers.reduce((sum, num) => sum + num, 0);
+  }
+
+  private validateNoNegatives(numbers: number[]): void {
+    if (numbers.some((n) => n < 0)) {
+      const negatives = numbers.filter((n) => n < 0);
+      throw new Error(`negatives not allowed: ${negatives.join(', ')}`);
+    }
   }
 }
