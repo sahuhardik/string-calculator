@@ -4,17 +4,24 @@ export class DefaultParser implements IStringParser {
   private readonly defaultDelimiterPattern = /[,\n]/;
   private readonly customDelimiterPattern = /^\/\/(.+)\n(.*)$/;
 
-  public parse(input: string): number[] {
+  public parse(input: string) {
     const customMatch = input.match(this.customDelimiterPattern);
 
     if (customMatch) {
       const delimiter = this.escapeRegex(customMatch[1]);
       const numbersSection = customMatch[2];
 
-      return this.tokenize(numbersSection, new RegExp(`[${delimiter}\n]`));
+      const cleanedDelimiter = delimiter.replace('\\', '');
+      return {
+        delimiter: cleanedDelimiter,
+        numbers: this.tokenize(numbersSection, new RegExp(`[${delimiter}\n]`))
+      }
     }
 
-    return this.tokenize(input, this.defaultDelimiterPattern);
+    return {
+      delimiter: '\n',
+      numbers:  this.tokenize(input, this.defaultDelimiterPattern)
+    }
   }
 
   private tokenize(value: string, delimiter: RegExp): number[] {

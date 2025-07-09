@@ -15,9 +15,14 @@ export class StringCalculator {
       return 0;
     }
 
-    const numbers = this.parser.parse(normalizedInput);
+    const {numbers, delimiter} = this.parser.parse(normalizedInput);
 
     this.validateNoNegatives(numbers);
+
+    if (delimiter === '*') {
+      return numbers.reduce((acc, a)=> acc * a, 1)
+    }
+
 
     const validNumbers = this.filterValidNumbers(numbers);
     return this.calculateSum(validNumbers);

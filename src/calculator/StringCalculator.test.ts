@@ -36,6 +36,10 @@ describe('StringCalculator', () => {
     expect(calculator.add('//#\n3#4')).toBe(7);
   });
 
+  it('should support * as an delimiter //*\n3*2', () => {
+    expect(calculator.add('//*\n3*2')).toBe(6);
+  });
+
   it('should throw an exception if any number is negative', () => {
     expect(() => calculator.add('1,-2')).toThrow('negatives not allowed: -2');
     expect(() => calculator.add('2,-4,3,-1')).toThrow('negatives not allowed: -4, -1');
